@@ -35,4 +35,6 @@ TEST_CASE("Testing class Epidemic") {
     CHECK(c.count(State::Removed) == 3);
     CHECK(c.count(State::Infected) == 4);
   }
+
+  //chiedi come poter far testare la funzione evolve
 }
