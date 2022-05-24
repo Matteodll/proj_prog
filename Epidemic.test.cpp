@@ -5,12 +5,12 @@
 
 TEST_CASE("Testing class Epidemic") {
   SUBCASE("Testing Size method") {
-    Epidemic c{0.5, 0.3, 1., 5};
+    Epidemic c{0.5, 0.3, 5};
     CHECK(c.size() == 5);
   }
 
   SUBCASE("Testing operator() overloads") {
-    Epidemic c{0.5, 0.3, 1., 5};
+    Epidemic c{0.5, 0.3, 5};
     c(1, 1, State::Susceptible);
     c(2, 3, State::Infected);
     c(3, 2, State::Removed);
@@ -29,7 +29,7 @@ TEST_CASE("Testing class Epidemic") {
   }
 
   SUBCASE("Testing count()") {
-    Epidemic c{0.5, 0.3, 1., 5};
+    Epidemic c{0.5, 0.3, 5};
     c(1, 1, State::Susceptible);
     c(1, 3, State::Infected);
     c(4, 3, State::Infected);
