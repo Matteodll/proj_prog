@@ -41,7 +41,30 @@ class Epidemic {
   int count(State s) const {
     return std::count(board_.begin(), board_.end(), s);
   }
-  
+
+  void filling(int num_infected, int num_removed) {
+    int dim = this->size() + 1;
+    std::cout << "dimension filling = " << dim << std::endl;
+    int x, y;
+
+    for (int i = 0; i < num_infected; ++i) {
+      do {
+        y = rand() % dim;
+        x = rand() % dim;
+        std::cout << "inf " << i << "coord (" << y << ", " << x << ")\n";
+      } while (board_[y * n_ + x] != State::Susceptible);
+      board_[y * n_ + x] = State::Infected;
+    }
+
+    for (int i = 0; i < num_removed; ++i) {
+      do {
+        y = rand() % dim;
+        x = rand() % dim;
+      } while (board_[y * n_ + x] != State::Susceptible);
+      board_[y * n_ + x] = State::Removed;
+    }
+  }
+
   void evolve() {
     std::vector<State> next = board_;
     double d;
@@ -71,6 +94,11 @@ class Epidemic {
     }
 
     board_ = next;
+
+    std::cout << "Susceptible: " << this->count(State::Susceptible)
+              << std::endl;
+    std::cout << "Infected: " << this->count(State::Infected) << std::endl;
+    std::cout << "Removed: " << this->count(State::Removed) << "\n\n";
   }
 };
 

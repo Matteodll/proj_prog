@@ -1,5 +1,5 @@
 #include <SFML/Graphics.hpp>
-#include<stdexcept>
+#include <stdexcept>
 
 #include "Epidemic.hpp"
 
@@ -9,6 +9,8 @@ int main() {
   int dim;
   double beta;
   double gamma;
+  int num_infected;
+  int num_removed;
   /*
     std::cout << "Welcome to Epidemic simulation!\n\n" << "Here some general
     rules to get started:\n"
@@ -28,34 +30,40 @@ int main() {
   std::cin >> dim;
 
   do {
-  std::cout << "Probability of infection [0, 1]: ";
-  std::cin >> beta;
+    std::cout << "Probability of infection [0, 1]: ";
+    std::cin >> beta;
   } while ((beta < 0) || (beta > 1));
 
   do {
-  std::cout << "Probability of healing [0, 1]: ";
-  std::cin >> gamma;
+    std::cout << "Probability of healing [0, 1]: ";
+    std::cin >> gamma;
   } while ((gamma < 0) || (gamma > 1));
 
+  do {
+    std::cout << "Number of infected: ";
+    std::cin >> num_infected;
+  } while (num_infected < 0 && num_infected > (dim * dim));
+
+  do {
+    std::cout << "Number of removed: ";
+    std::cin >> num_removed;
+  } while (num_removed < 0 && num_removed > ((dim * dim) - num_infected));
+
   Epidemic c{beta, gamma, dim};
-  c(1, 1, State::Infected);
-  c(2, 3, State::Infected);
-  c(3, 2, State::Removed);
-  c(1, 9, State::Infected);
-  c(9, 1, State::Infected);
-  c(9, 9, State::Infected);
+
+  c.filling(num_infected, num_removed);
 
   int const num_points = c.size();
   int fps;
   float point_dim;
 
-  if(num_points <= 15) {
+  if (num_points <= 15) {
     point_dim = 30.f;
     fps = 1;
   } else if (num_points <= 50) {
     point_dim = 10.f;
     fps = 1;
-  } else if(num_points <= 150) {
+  } else if (num_points <= 150) {
     point_dim = 5.f;
     fps = 2;
   } else {
