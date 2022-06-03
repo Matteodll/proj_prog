@@ -24,7 +24,7 @@ class Epidemic {
     assert(n > 0);
   }
 
-  State operator()(int i, int j) {
+  State operator()(int i, int j) const {
     return (i >= 0 && i < n_ && j >= 0 && j < n_) ? board_[i * n_ + j]
                                                   : State::Removed;
   }

@@ -42,5 +42,4 @@ TEST_CASE("Testing class Epidemic") {
     CHECK(c.count(State::Removed) == 3);
     CHECK(c.count(State::Infected) == 4);
   }
-
 }

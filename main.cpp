@@ -11,23 +11,11 @@ int main() {
   double gamma;
   int num_infected;
   int num_removed;
-  /*
-    std::cout << "Welcome to Epidemic simulation!\n\n" << "Here some general
-    rules to get started:\n"
-    << "-The number of people will be computed as the dimension of the board at
-    the power of 2\n"
-    << " (if you insert dim = 5 the number of people will be 25\n"
-    << "-Insert the number of infected and the number of removed as integer
-    numbers\n"
-    << "-Note that (number of infected + number of removed) can not be grater
-    than the dimension squared.\n"
-    << " As result the number of susceptible will be: (dimension^2) - (number of
-    infected + number of removed)\n"
-    << "-Insert all the probability required as numbers included between 0 and
-    1\n";
-  */
-  std::cout << "Dimension: ";
-  std::cin >> dim;
+
+  do {
+    std::cout << "Dimension: ";
+    std::cin >> dim;
+  } while (dim < 0);
 
   do {
     std::cout << "Probability of infection [0, 1]: ";
@@ -42,12 +30,12 @@ int main() {
   do {
     std::cout << "Number of infected: ";
     std::cin >> num_infected;
-  } while (num_infected < 0 && num_infected > (dim * dim));
+  } while (num_infected < 0 || num_infected > (dim * dim));
 
   do {
     std::cout << "Number of removed: ";
     std::cin >> num_removed;
-  } while (num_removed < 0 && num_removed > ((dim * dim) - num_infected));
+  } while (num_removed < 0 || num_removed > ((dim * dim) - num_infected));
 
   Epidemic c{beta, gamma, dim};
 
@@ -133,11 +121,3 @@ int main() {
     window.display();
   }
 }
-
-/*
-        domande:
-        - riempimento della board da fare random? si
-        - quali parametri chiedere da terminale (oltre al numero di persone)?
-   probabilità e numero infetti e rimossi
-
-*/
