@@ -66,6 +66,14 @@ class Epidemic {
   void evolve() {
     std::vector<State> next = board_;
     double d;
+    int c_susc, c_inf, c_rem;
+    double beta_si = (beta_ * this->count(State::Susceptible) / (n_ * n_)) *
+                     this->count(State::Infected);
+    double gamma_i = gamma_ * this->count(State::Infected);
+
+    c_susc = this->count(State::Susceptible) - beta_si;
+    c_inf = this->count(State::Infected) - beta_si - gamma_i;
+    c_rem = this->count(State::Removed) + gamma_i;
 
     for (int i = 0; i < n_; ++i) {
       for (int j = 0; j < n_; ++j) {
@@ -93,9 +101,12 @@ class Epidemic {
 
     board_ = next;
 
+    std::cout << "Theorical Susceptible: " << c_susc << std::endl;
     std::cout << "Susceptible: " << this->count(State::Susceptible)
               << std::endl;
+    std::cout << "Theorical Infected: " << c_inf << std::endl;
     std::cout << "Infected: " << this->count(State::Infected) << std::endl;
+    std::cout << "Theorical Removed: " << c_rem << std::endl;
     std::cout << "Removed: " << this->count(State::Removed) << "\n\n";
   }
 };

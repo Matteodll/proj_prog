@@ -7,6 +7,8 @@ int main() {
   std::srand(std::time(nullptr));
 
   int dim;
+  int days;
+  int n_day = 0;
   double beta;
   double gamma;
   int num_infected;
@@ -36,6 +38,11 @@ int main() {
     std::cout << "Number of removed: ";
     std::cin >> num_removed;
   } while (num_removed < 0 || num_removed > ((dim * dim) - num_infected));
+
+  do {
+    std::cout << "Durata in giorni della simulazione: ";
+    std::cin >> days;
+  } while (days <= 0);
 
   Epidemic c{beta, gamma, dim};
 
@@ -92,7 +99,11 @@ int main() {
     }
 
     window.clear(sf::Color::White);
-    c.evolve();
+    if (n_day < days) {
+      std::cout << "day: " << n_day << std::endl;
+      c.evolve();
+      ++n_day;
+    }
 
     for (int i = 0; i < num_points; ++i) {
       for (int j = 0; j < num_points; ++j) {
@@ -121,3 +132,7 @@ int main() {
     window.display();
   }
 }
+
+/*
+- aggiungi durata simulazione in giorni
+*/
